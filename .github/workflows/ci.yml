@@ -6,7 +6,10 @@ on:
     branches: [ main ]
 
 jobs:
+  
   scan_ruby:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
 
     steps:
