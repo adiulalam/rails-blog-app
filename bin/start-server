@@ -3,9 +3,9 @@
 # Variables
 CONTAINER_NAME="rails-postgres"
 POSTGRES_VERSION="15" # Specify the desired PostgreSQL version
-POSTGRES_USER="admin"
-POSTGRES_DB="rails_blog_app_development"
+POSTGRES_USER="postgres"
 POSTGRES_PORT="5432"
+VOLUME_NAME="rails-postgres-data"
 
 # Check if the container already exists
 if [ "$(docker ps -aq -f name=${CONTAINER_NAME})" ]; then
@@ -14,15 +14,21 @@ if [ "$(docker ps -aq -f name=${CONTAINER_NAME})" ]; then
   docker rm ${CONTAINER_NAME} > /dev/null 2>&1
 fi
 
-# Run PostgreSQL container with restart policy
+# Create the volume if it doesn't exist
+if [ -z "$(docker volume ls -q -f name=${VOLUME_NAME})" ]; then
+  echo "Creating a volume named ${VOLUME_NAME}..."
+  docker volume create ${VOLUME_NAME}
+fi
+
+# Run PostgreSQL container with restart policy and volume
 echo "Creating a PostgreSQL container named ${CONTAINER_NAME}..."
 docker run -d \
   --name ${CONTAINER_NAME} \
   --restart=unless-stopped \
   -e POSTGRES_USER=${POSTGRES_USER} \
-  -e POSTGRES_DB=${POSTGRES_DB} \
   -e POSTGRES_HOST_AUTH_METHOD=trust \
   -p ${POSTGRES_PORT}:5432 \
+  -v ${VOLUME_NAME}:/var/lib/postgresql/data \
   postgres:${POSTGRES_VERSION}
 
 # Check if the container started successfully
@@ -32,7 +38,6 @@ if [ $? -eq 0 ]; then
   echo "  Host: localhost"
   echo "  Port: ${POSTGRES_PORT}"
   echo "  Username: ${POSTGRES_USER}"
-  echo "  Database: ${POSTGRES_DB}"
 else
   echo "Failed to create the PostgreSQL instance."
   exit 1
