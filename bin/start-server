@@ -1,37 +1,41 @@
 #!/bin/bash -e
 
 # Variables
-CONTAINER_NAME="rails-postgres"
+POSTGRES_CONTAINER_NAME="rails-postgres"
 POSTGRES_VERSION="15" # Specify the desired PostgreSQL version
 POSTGRES_USER="postgres"
 POSTGRES_PORT="5432"
-VOLUME_NAME="rails-postgres-data"
+POSTGRES_VOLUME_NAME="rails-postgres-data"
 
-# Check if the container already exists
-if [ "$(docker ps -aq -f name=${CONTAINER_NAME})" ]; then
-  echo "Container with the name ${CONTAINER_NAME} already exists. Stopping and removing it."
-  docker stop ${CONTAINER_NAME} > /dev/null 2>&1
-  docker rm ${CONTAINER_NAME} > /dev/null 2>&1
+REDIS_CONTAINER_NAME="rails-redis"
+REDIS_PORT="6379"
+REDIS_VERSION="7" # Specify the desired Redis version
+
+# Check if the PostgreSQL container already exists
+if [ "$(docker ps -aq -f name=${POSTGRES_CONTAINER_NAME})" ]; then
+  echo "Container with the name ${POSTGRES_CONTAINER_NAME} already exists. Stopping and removing it."
+  docker stop ${POSTGRES_CONTAINER_NAME} > /dev/null 2>&1
+  docker rm ${POSTGRES_CONTAINER_NAME} > /dev/null 2>&1
 fi
 
-# Create the volume if it doesn't exist
-if [ -z "$(docker volume ls -q -f name=${VOLUME_NAME})" ]; then
-  echo "Creating a volume named ${VOLUME_NAME}..."
-  docker volume create ${VOLUME_NAME}
+# Create the PostgreSQL volume if it doesn't exist
+if [ -z "$(docker volume ls -q -f name=${POSTGRES_VOLUME_NAME})" ]; then
+  echo "Creating a volume named ${POSTGRES_VOLUME_NAME}..."
+  docker volume create ${POSTGRES_VOLUME_NAME}
 fi
 
 # Run PostgreSQL container with restart policy and volume
-echo "Creating a PostgreSQL container named ${CONTAINER_NAME}..."
+echo "Creating a PostgreSQL container named ${POSTGRES_CONTAINER_NAME}..."
 docker run -d \
-  --name ${CONTAINER_NAME} \
+  --name ${POSTGRES_CONTAINER_NAME} \
   --restart=unless-stopped \
   -e POSTGRES_USER=${POSTGRES_USER} \
   -e POSTGRES_HOST_AUTH_METHOD=trust \
   -p ${POSTGRES_PORT}:5432 \
-  -v ${VOLUME_NAME}:/var/lib/postgresql/data \
+  -v ${POSTGRES_VOLUME_NAME}:/var/lib/postgresql/data \
   postgres:${POSTGRES_VERSION}
 
-# Check if the container started successfully
+# Check if the PostgreSQL container started successfully
 if [ $? -eq 0 ]; then
   echo "PostgreSQL instance created successfully!"
   echo "Connection details:"
@@ -40,5 +44,31 @@ if [ $? -eq 0 ]; then
   echo "  Username: ${POSTGRES_USER}"
 else
   echo "Failed to create the PostgreSQL instance."
+  exit 1
+fi
+
+# Check if the Redis container already exists
+if [ "$(docker ps -aq -f name=${REDIS_CONTAINER_NAME})" ]; then
+  echo "Container with the name ${REDIS_CONTAINER_NAME} already exists. Stopping and removing it."
+  docker stop ${REDIS_CONTAINER_NAME} > /dev/null 2>&1
+  docker rm ${REDIS_CONTAINER_NAME} > /dev/null 2>&1
+fi
+
+# Run Redis container
+echo "Creating a Redis container named ${REDIS_CONTAINER_NAME}..."
+docker run -d \
+  --name ${REDIS_CONTAINER_NAME} \
+  --restart=unless-stopped \
+  -p ${REDIS_PORT}:6379 \
+  redis:${REDIS_VERSION}
+
+# Check if the Redis container started successfully
+if [ $? -eq 0 ]; then
+  echo "Redis instance created successfully!"
+  echo "Connection details:"
+  echo "  Host: localhost"
+  echo "  Port: ${REDIS_PORT}"
+else
+  echo "Failed to create the Redis instance."
   exit 1
 fi
