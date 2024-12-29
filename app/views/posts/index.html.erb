@@ -1,16 +1,10 @@
-<p style="color: green"><%= notice %></p>
+<h1 class="block">All Posts</h1>
 
-<% content_for :title, "Posts" %>
-
-<h1>Post</h1>
-
-<div id="posts">
+<div class="flex flex-col">
   <% @posts.each do |post| %>
-    <%= render post %>
-    <p>
-      <%= link_to "Show this post", post %>
-    </p>
+    <div>
+      <h2><%= link_to post.title, post %></h2>
+      <%= post.body %>
+    </div>
   <% end %>
 </div>
-
-<%= link_to "New post", new_post_path %>
