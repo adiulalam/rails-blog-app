@@ -108,6 +108,8 @@ GEM
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x64-mingw-ucrt)
     ffi (1.17.0-x86_64-linux-gnu)
+    font-awesome-rails (4.7.0.9)
+      railties (>= 3.2, < 9.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hotwire-livereload (1.4.1)
@@ -322,6 +324,7 @@ DEPENDENCIES
   brakeman
   capybara
   debug
+  font-awesome-rails (~> 4.7)
   hotwire-livereload (~> 1.4)
   importmap-rails
   jbuilder

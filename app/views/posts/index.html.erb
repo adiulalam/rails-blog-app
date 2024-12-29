@@ -7,9 +7,12 @@
       <div class="p-6 pt-0">
         <%= render_typography(tag: :p, content: post.body) %>
       </div>
-      <div class="items-center p-6 pt-0 flex justify-between">
+      <div class="items-center p-6 pt-0 flex justify-between ">
         <%= render_button text: "Delete", variant: :destructive %>
-        <%= render_button "Edit", variant: :secondary %>
+        <%= render_button variant: :secondary do %>
+          <%= fa_icon "pencil-square-o", class: 'mt-1 mr-1' %>
+          Edit
+        <% end %>
       </div>
     <% end %>
   <% end %>
