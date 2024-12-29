@@ -62,3 +62,7 @@ end
 
 gem "tailwindcss-rails"
 gem "wdm", ">= 0.1.0" if Gem.win_platform?
+
+gem "shadcn-ui", "~> 0.0.15"
+
+gem "tailwind_merge", "~> 0.14.0"

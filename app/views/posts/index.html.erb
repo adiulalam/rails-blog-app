@@ -2,9 +2,14 @@
 
 <div class="flex flex-col">
   <% @posts.each do |post| %>
-    <div>
-      <h2><%= link_to post.title, post %></h2>
-      <%= post.body %>
-    </div>
+<!--    <div>-->
+<!--      <h2><%#= link_to post.title, post %></h2>-->
+      <%#= post.body %>
+<!--    </div>-->
+
+    <%= render_card title: "Did you know?",
+                    subtitle: "This is kinda cool.",
+                    body: "You can embed any HTML in the body with a block.",
+                    footer: "Have a great day!" %>
   <% end %>
 </div>
