@@ -9,12 +9,7 @@
         <%= render_typography(tag: :p, content: post.body, class: 'truncate') %>
       </div>
       <div class="items-center p-6 pt-0 flex justify-between ">
-        <%= form_with(url: post_path(post), method: :delete) do %>
-          <%= render_button variant: :destructive do %>
-            <%= fa_icon "trash-o", class: 'mt-1 mr-1' %>
-            Delete
-          <% end %>
-        <% end %>
+        <%= render "delete_alert", post: post %>
 
         <%= render_button variant: :secondary, as: :link, href: edit_post_path(post) do %>
           <%= fa_icon "pencil-square-o", class: 'mt-1 mr-1' %>
