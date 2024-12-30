@@ -1,0 +1,13 @@
+<nav class="<%= tw('flex items-center justify-between bg-primary text-primary-foreground p-4 shadow-md') %>">
+  <!-- Left Section: Home Icon -->
+  <%= link_to home_path, class: tw('flex items-center text-xl font-semibold hover:text-primary-dark') do %>
+  <%= fa_icon "home", class: "mt-1 mr-2" %>
+  Home
+  <% end %>
+
+  <!-- Right Section: New Post Button -->
+  <%= render_button as: :link, href: new_post_path do %>
+    <%= fa_icon "plus-circle", class: 'mt-1 mr-1' %>
+    New Post
+  <% end %>
+</nav>

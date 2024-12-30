@@ -20,6 +20,7 @@
   </head>
 
   <body>
+    <%= render_navbar(home_path: root_path, new_post_path: new_post_path) %>
     <main class="container mx-auto p-5">
       <%= yield %>
     </main>

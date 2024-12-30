@@ -1,17 +1,30 @@
-<%= form_with(model: post) do |form| %>
-  <% if post.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+<div class="flex justify-center">
+  <%= render_card title: "New Post" do %>
+    <%= render_form_for(@post) do |form| %>
+      <div class="p-6 pt-0">
+        <%= form.label :title, class: "text-right mr-4 text-lg" %>
+        <%= form.text_field :title, class: "col-span-2" %>
+      </div>
+      <div class="p-6 pt-0">
+        <%= form.label :body, class: "text-right mr-4 text-lg" %>
+        <%= form.text_area :body, class: "col-span-2" %>
+      </div>
 
-      <ul>
-        <% post.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
+      <% if post.errors.any? %>
+        <div class="text-red-500 p-6 pt-0">
+          <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+          <ul>
+            <% post.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="flex justify-center mb-8">
+        <%= form.submit "Create Post" %>
+      </div>
+    <% end %>
   <% end %>
-
-  <div>
-    <%= form.submit %>
-  </div>
-<% end %>
+</div>
