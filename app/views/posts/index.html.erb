@@ -1,11 +1,12 @@
-<%= render_typography(tag: :h1, content: "All Posts!") %>
+<%= render_typography(tag: :h1,
+                      class: 'pb-2',
+                      content: "All Posts!") %>
 
 <div class="flex w-full gap-2 flex-wrap">
   <% @posts.each do |post| %>
-    <%= render_card title: post.title,
-                    link: post_path(post) do %>
+    <%= render_card(title: post.title, link: post_path(post)) do %>
       <div class="p-6 pt-0">
-        <%= render_typography(tag: :p, content: post.body) %>
+        <%= render_typography(tag: :p, content: post.body, class: 'truncate') %>
       </div>
       <div class="items-center p-6 pt-0 flex justify-between ">
         <%= form_with(url: post_path(post), method: :delete) do %>
