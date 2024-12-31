@@ -8,14 +8,16 @@
       <div class="p-6 pt-0">
         <%= render_typography(tag: :p, content: post.body, class: 'truncate') %>
       </div>
-      <div class="items-center p-6 pt-0 flex justify-between ">
-        <%= render "delete_alert", post: post %>
+      <% if post.user_id == current_user.id %>
+        <div class="items-center p-6 pt-0 flex justify-between ">
+          <%= render "delete_alert", post: post %>
 
-        <%= render_button variant: :secondary, as: :link, href: edit_post_path(post) do %>
-          <%= fa_icon "pencil-square-o", class: 'mt-1 mr-1' %>
-          Edit
-        <% end %>
-      </div>
+          <%= render_button variant: :secondary, as: :link, href: edit_post_path(post) do %>
+            <%= fa_icon "pencil-square-o", class: 'mt-1 mr-1' %>
+            Edit
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   <% end %>
 </div>

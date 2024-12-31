@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, only: %i[ create update destroy ]
   before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :authorize_user!, only: %i[ edit update destroy ]
 
   # GET /posts or /posts.json
   def index
@@ -21,7 +23,7 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
 
     respond_to do |format|
       if @post.save
@@ -58,13 +60,16 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def post_params
-      params.require(:post).permit(:title, :body)
-    end
+  def set_post
+    @post = Post.find(params[:id])
+  end
+
+  def post_params
+    params.require(:post).permit(:title, :body)
+  end
+
+  def authorize_user!
+    redirect_to posts_path, alert: "You are not authorized to perform this action." unless @post.user == current_user
+  end
 end

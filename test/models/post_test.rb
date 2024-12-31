@@ -3,10 +3,11 @@
 # Table name: posts
 #
 #  id         :bigint           not null, primary key
-#  title      :string
-#  body       :text
+#  title      :string           not null
+#  body       :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :bigint           not null
 #
 require "test_helper"
 
