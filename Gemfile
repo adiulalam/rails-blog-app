@@ -68,3 +68,5 @@ gem "shadcn-ui", "~> 0.0.15"
 gem "tailwind_merge", "~> 0.14.0"
 
 gem "font-awesome-rails", "~> 4.7"
+
+gem "devise", "~> 4.9"

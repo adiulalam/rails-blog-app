@@ -21,6 +21,8 @@
 
   <body>
     <%= render_navbar(home_path: root_path, new_post_path: new_post_path) %>
+    <p class="notice flex items-center justify-center"><%= notice %></p>
+    <p class="alert flex items-center justify-center"><%= alert %></p>
     <main class="container mx-auto p-5">
       <%= yield %>
     </main>
