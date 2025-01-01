@@ -25,7 +25,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   # Test post creation
   test "should create post" do
     assert_difference("Post.count") do
-      post posts_url, params: { post: { title: "New Post", body: "This is a new post." } }
+      post posts_url, params: { post: { title: "New Post", content: "This is a new post." } }
     end
     assert_redirected_to post_url(Post.last)
   end
@@ -44,7 +44,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
 
   # Test post update
   test "should update post" do
-    patch post_url(@post), params: { post: { title: "Updated Post", body: "This is an updated post." } }
+    patch post_url(@post), params: { post: { title: "Updated Post", content: "This is an updated post." } }
     assert_redirected_to post_url(@post)
   end
 
@@ -61,7 +61,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     other_user = users(:two)  # Assuming another user fixture named 'two'
     sign_in other_user
 
-    patch post_url(@post), params: { post: { title: "Unauthorized Edit", body: "Trying to edit another user's post" } }
+    patch post_url(@post), params: { post: { title: "Unauthorized Edit", content: "Trying to edit another user's post" } }
     assert_redirected_to posts_url
     assert_equal "You are not authorized to perform this action.", flash[:alert]
   end

@@ -12,7 +12,7 @@
 require "test_helper"
 
 class PostTest < ActiveSupport::TestCase
-  # Test that the post is valid with a title, body, and user
+  # Test that the post is valid with a title, content, and user
   test "should be valid with valid attributes" do
     post = posts(:draft_post)
     assert post.valid?
@@ -25,10 +25,10 @@ class PostTest < ActiveSupport::TestCase
     assert_not post.valid?
   end
 
-  # Test that a post must have a body
-  test "should not be valid without a body" do
+  # Test that a post must have a content
+  test "should not be valid without a content" do
     post = posts(:draft_post)
-    post.body = nil
+    post.content = nil
     assert_not post.valid?
   end
 

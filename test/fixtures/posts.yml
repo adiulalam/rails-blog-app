@@ -17,24 +17,24 @@
 
 one:
   title: "First Post"
-  body: "This is a sample post."
+  content: "This is a sample post."
   user: one  # Linking to user fixture
   is_draft: true
 
 two:
   title: "Second Post"
-  body: "This is another sample post."
+  content: "This is another sample post."
   user: one  # Linking to user fixture
   is_draft: false
 
 draft_post:
   title: "Draft Post"
-  body: "This is a draft post."
+  content: "This is a draft post."
   is_draft: true
   user: one
 
 published_post:
   title: "Published Post"
-  body: "This is a published post."
+  content: "This is a published post."
   is_draft: false
   user: one

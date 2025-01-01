@@ -4,7 +4,7 @@
                   class: "w-full max-w-2xl",
                   link: post_path(@post)) do %>
     <div class="p-6 pt-0">
-      <%= render_typography(tag: :p, content: @post.content) %>
+      <%= post.content %>
     </div>
     <% if @post.user_id == current_user&.id %>
       <div class="items-center p-6 pt-0 flex justify-between ">
