@@ -8,7 +8,7 @@
                     subtitle: "By #{post.user.email[0..1]} - #{post.created_at.strftime("%B %d, %Y")}",
                     link: post_path(post)) do %>
       <div class="p-6 pt-0">
-        <%= render_typography(tag: :p, content: post.body, class: 'truncate') %>
+        <%= render_typography(tag: :p, content: post.content, class: 'truncate') %>
       </div>
     <% end %>
   <% end %>
