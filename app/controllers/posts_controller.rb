@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   include Components::PaginationHelper
+  include ActionView::RecordIdentifier
 
   before_action :authenticate_user!, only: %i[ create update destroy my_posts remove_cover_image ]
   before_action :set_post, only: %i[ show edit update destroy remove_cover_image ]
@@ -93,7 +94,11 @@ class PostsController < ApplicationController
 
   def remove_cover_image
     @post.cover_image.purge if @post.cover_image.attached?
-    redirect_to edit_post_path(@post), notice: 'Cover image removed successfully.'
+
+    respond_to do |format|
+      format.html { redirect_to edit_post_path(@post) }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(dom_id(@post, :cover_image)) }
+    end
   end
 
   private
