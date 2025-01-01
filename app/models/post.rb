@@ -8,6 +8,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
+#  is_draft   :boolean          default(TRUE), not null
 #
 class Post < ApplicationRecord
   belongs_to :user
@@ -17,5 +18,5 @@ class Post < ApplicationRecord
   validates :user_id, presence: true
 
   scope :draft, -> { where(is_draft: true) }
-  scope :note_draft, -> { where(is_draft: false) }
+  scope :completed, -> { where(is_draft: false) }
 end

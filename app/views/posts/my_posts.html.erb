@@ -20,10 +20,7 @@
       </div>
       <% if post.user_id == current_user&.id %>
         <div class="items-center p-6 pt-0 flex justify-between">
-          <%= render_button variant: :destructive, as: :link, href: post_path(post), method: :delete, data: { turbo_confirm: "Are you sure?" } do %>
-            <%= fa_icon "trash", class: 'mt-1 mr-1' %>
-            Delete
-          <% end %>
+          <%= render "delete_alert", post: post %>
 
           <%= render_button variant: :secondary, as: :link, href: edit_post_path(post) do %>
             <%= fa_icon "pencil-square-o", class: 'mt-1 mr-1' %>

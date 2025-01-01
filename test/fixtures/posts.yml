@@ -8,14 +8,34 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  user_id    :bigint           not null
+#  is_draft   :boolean          default(TRUE), not null
 #
 
 # This model initially had no columns defined. If you add columns to the
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+
+one:
+  title: "First Post"
+  body: "This is a sample post."
+  user: one  # Linking to user fixture
+  is_draft: true
+
+two:
+  title: "Second Post"
+  body: "This is another sample post."
+  user: one  # Linking to user fixture
+  is_draft: false
+
+draft_post:
+  title: "Draft Post"
+  body: "This is a draft post."
+  is_draft: true
+  user: one
+
+published_post:
+  title: "Published Post"
+  body: "This is a published post."
+  is_draft: false
+  user: one
