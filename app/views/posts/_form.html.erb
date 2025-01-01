@@ -4,9 +4,15 @@
       <%= form.label :title, class: "text-right mr-4 text-lg" %>
       <%= form.text_field :title, class: "col-span-2" %>
     </div>
+
     <div class="p-6 pt-0">
       <%= form.label :body, class: "text-right mr-4 text-lg" %>
       <%= form.text_area :body, class: "col-span-2" %>
+    </div>
+
+    <div class="p-6 pt-0">
+      <%= form.label 'Is Draft?', class: "text-right mr-4 text-lg" %>
+      <%= form.check_box :is_draft %>
     </div>
 
     <% if post.errors.any? %>

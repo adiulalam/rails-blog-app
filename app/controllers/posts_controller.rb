@@ -5,11 +5,20 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.all.completed
   end
 
   # GET /posts/1 or /posts/1.json
   def show
+    # If the user is not signed in, ensure the post is not a draft
+    if current_user.nil? && @post.is_draft?
+      redirect_to posts_path, alert: "You can't view this draft post." and return
+    end
+
+    # If the user is signed in, check if the post belongs to them
+    if current_user.present? && @post.is_draft? && @post.user != current_user
+      redirect_to posts_path, alert: "You are not authorized to view this post." and return
+    end
   end
 
   # GET /posts/new
@@ -72,7 +81,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :body)
+    params.require(:post).permit(:title, :body, :is_draft)
   end
 
   def authorize_user!
