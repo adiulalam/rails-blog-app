@@ -7,3 +7,7 @@ Post.create!(title: "Post by User 2", body: "This is the body of the second post
 Post.create!(title: "Post by User 3", body: "This is the body of the third post.", user: user3)
 Post.create!(title: "Another post by User 1", body: "Another body of a post by User 1.", user: user1)
 Post.create!(title: "Another post by User 2", body: "Another body of a post by User 2.", user: user2)
+
+100.times do |i|
+  Post.create!(title: "Post #{i}", content: "Body #{i}.", is_draft: false, user: User.first)
+end

@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  include Components::PaginationHelper
+
   before_action :authenticate_user!, only: %i[ create update destroy my_posts ]
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authorize_user!, only: %i[ edit update destroy ]
@@ -6,6 +8,14 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     @posts = Post.all.completed.order(created_at: :desc)
+                 .page(params[:page]).per(10)
+
+    @pagination = {
+      prev_page: @posts.prev_page,
+      next_page: @posts.next_page,
+      current_page: @posts.current_page,
+      pages_to_display: pagination_with_ellipsis(@posts.current_page, @posts.total_pages)
+    }
   end
 
   # GET /posts/1 or /posts/1.json
@@ -70,8 +80,15 @@ class PostsController < ApplicationController
 
   def my_posts
     @show_drafts_only = params[:drafts_only] == "true"
-    @posts = current_user.posts.order(created_at: :desc)
-    @posts = @posts.draft if @show_drafts_only
+    @posts = current_user.posts.order(created_at: :desc).page(params[:page]).per(10)
+    @posts = @posts.draft.page(params[:page]).per(10) if @show_drafts_only
+
+    @pagination = {
+      prev_page: @posts.prev_page,
+      next_page: @posts.next_page,
+      current_page: @posts.current_page,
+      pages_to_display: pagination_with_ellipsis(@posts.current_page, @posts.total_pages)
+    }
   end
 
   private

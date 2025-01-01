@@ -13,3 +13,5 @@
     <% end %>
   <% end %>
 </div>
+
+<%= render_pagination(@pagination) if @posts.total_pages > 1 %>
