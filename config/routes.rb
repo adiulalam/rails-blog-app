@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     collection do
       get :my_posts
     end
+    member do
+      delete :remove_cover_image
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

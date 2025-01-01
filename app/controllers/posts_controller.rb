@@ -1,9 +1,9 @@
 class PostsController < ApplicationController
   include Components::PaginationHelper
 
-  before_action :authenticate_user!, only: %i[ create update destroy my_posts ]
-  before_action :set_post, only: %i[ show edit update destroy ]
-  before_action :authorize_user!, only: %i[ edit update destroy ]
+  before_action :authenticate_user!, only: %i[ create update destroy my_posts remove_cover_image ]
+  before_action :set_post, only: %i[ show edit update destroy remove_cover_image ]
+  before_action :authorize_user!, only: %i[ edit update destroy remove_cover_image ]
 
   # GET /posts or /posts.json
   def index
@@ -91,6 +91,11 @@ class PostsController < ApplicationController
     }
   end
 
+  def remove_cover_image
+    @post.cover_image.purge if @post.cover_image.attached?
+    redirect_to edit_post_path(@post), notice: 'Cover image removed successfully.'
+  end
+
   private
 
   def set_post
@@ -98,7 +103,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :content, :is_draft)
+    params.require(:post).permit(:title, :content, :cover_image, :is_draft)
   end
 
   def authorize_user!
