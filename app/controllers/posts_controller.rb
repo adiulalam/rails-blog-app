@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, only: %i[ create update destroy ]
+  before_action :authenticate_user!, only: %i[ create update destroy my_posts ]
   before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authorize_user!, only: %i[ edit update destroy ]
 
@@ -57,6 +57,12 @@ class PostsController < ApplicationController
       format.html { redirect_to posts_path, status: :see_other, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def my_posts
+    @show_drafts_only = params[:drafts_only] == "true"
+    @posts = current_user.posts
+    @posts = @posts.draft if @show_drafts_only
   end
 
   private
