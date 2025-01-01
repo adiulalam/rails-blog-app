@@ -5,7 +5,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all.completed
+    @posts = Post.all.completed.order(created_at: :desc)
   end
 
   # GET /posts/1 or /posts/1.json
@@ -70,7 +70,7 @@ class PostsController < ApplicationController
 
   def my_posts
     @show_drafts_only = params[:drafts_only] == "true"
-    @posts = current_user.posts
+    @posts = current_user.posts.order(created_at: :desc)
     @posts = @posts.draft if @show_drafts_only
   end
 
