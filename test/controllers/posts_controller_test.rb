@@ -7,7 +7,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     # Set up posts
-    @post = posts(:one)
+    @post = posts(:post_one)
   end
 
   # Test index action
@@ -70,7 +70,7 @@ class PostsControllerTest < ActionDispatch::IntegrationTest
   test "should filter posts by drafts_only param" do
     get my_posts_posts_url(drafts_only: "true")
     assert_response :success
-    assert_includes assigns(:posts), posts(:one)  # Assuming the first post is a draft
-    assert_not_includes assigns(:posts), posts(:two)  # Assuming the second post is not a draft
+    assert_includes assigns(:posts), posts(:post_one)  # Assuming the first post is a draft
+    assert_not_includes assigns(:posts), posts(:post_two)  # Assuming the second post is not a draft
   end
 end

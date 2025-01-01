@@ -1,5 +1,5 @@
 <div class="flex flex-col gap-4 items-center justify-center">
-  <%= image_tag @post.cover_image %>
+  <%= image_tag @post.cover_image if @post.cover_image.attached? %>
 
   <%= render_card(title: @post.title,
                   subtitle: "By #{post.user.email[0..1]}",

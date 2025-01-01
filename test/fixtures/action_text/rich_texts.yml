@@ -1,4 +1,19 @@
-# one:
-#   record: name_of_fixture (ClassOfFixture)
-#   name: content
-#   body: <p>In a <i>million</i> stars!</p>
+one:
+  record: post_one (Post)
+  name: content
+  body: "<p>This is the content of the first post</p>"
+
+two:
+  record: post_two (Post)
+  name: content
+  body: "<p>This is the content of the second post</p>"
+
+draft_post:
+  record: draft_post (Post)
+  name: content
+  body: "<p>This is the content of the draft post</p>"
+
+published_post:
+  record: published_post (Post)
+  name: content
+  body: "<p>This is the content of the published post</p>"
