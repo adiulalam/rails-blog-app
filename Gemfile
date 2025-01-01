@@ -71,4 +71,4 @@ gem "font-awesome-rails", "~> 4.7"
 
 gem "devise", "~> 4.9"
 
-gem 'rails-controller-testing'
+gem "rails-controller-testing"
