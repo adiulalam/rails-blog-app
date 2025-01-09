@@ -51,7 +51,7 @@ group :development do
 
   gem "annotate"
 
-  gem "hotwire-livereload", "~> 1.4"
+  gem "hotwire-livereload", "~> 2.0"
 end
 
 group :test do
